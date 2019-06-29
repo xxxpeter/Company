@@ -1,1 +1,141 @@
+org.model
+member.java
 
+
+package org.model;
+
+public class member {
+	private Integer id;
+	private String name;
+	private String password;
+	
+	public member()
+	{
+		
+	}
+	
+	public member(String name,String password)
+	{
+//		if(name==null || name.trim().equals("")) {
+//			System.out.println("名子不能空白");
+//			throw new RuntimeException("名子失敗");
+//		}else {
+			this.name=name;
+//		}
+		
+//		if(password==null || password.trim().equals("")) {
+//			System.out.println("密碼不能空白");
+//			throw new RuntimeException("密碼失敗");
+//		}else {
+			this.password=password;
+//		}
+	}
+	
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	
+
+}
+
+
+
+
+
+
+
+
+
+org.model
+porder.java
+
+
+package org.model;
+
+public class porder {
+	private Integer id;
+	private String name;
+	private String product;
+	private Integer amount;
+	private Integer sum;
+	
+	private String date;
+
+	public porder()
+	{
+		
+	}
+	
+	public porder(String name,String product,int amount)
+	{
+		
+		this.name=name;
+		this.product=product;
+		this.amount=amount;
+		
+		//如果產品是A，價格1500元
+		if(this.product.equals("A")) sum=amount*1500;
+		if(this.product.equals("B")) sum=amount*2000;
+		if(this.product.equals("C")) sum=amount*2500;
+		
+	}
+	
+	
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getProduct() {
+		return product;
+	}
+	public void setProduct(String product) {
+		this.product = product;
+	}
+	public Integer getAmount() {
+		return amount;
+	}
+	public void setAmount(Integer amount) {
+		this.amount = amount;
+	}
+	public Integer getSum() {
+		return sum;
+	}
+	public void setSum(Integer sum) {
+		this.sum = sum;
+	}
+	
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+	
+	
+
+}
