@@ -83,6 +83,5 @@ index.jsp
 
 </body>
 </html>
-© 2019 GitHub, Inc.
-© 2019 GitHub, Inc.
+
 				
