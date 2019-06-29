@@ -1,3 +1,5 @@
+//先做src
+
 org.model
 member.java
 
@@ -139,3 +141,75 @@ public class porder {
 	
 
 }
+
+
+
+
+
+
+
+
+
+
+org.model
+member.hbm.xml
+
+
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2019/6/3 ?U?? 08:39:18 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="org.model.member" table="MEMBER" catalog="company">
+        <id name="id" type="java.lang.Integer">
+            <column name="ID" />
+            <generator class="native" />
+        </id>
+        <property name="name" type="java.lang.String">
+            <column name="NAME" />
+        </property>
+        <property name="password" type="java.lang.String">
+            <column name="PASSWORD" />
+        </property>
+    </class>
+</hibernate-mapping>
+
+
+
+
+
+
+
+
+
+org.model
+porder.hbm.xml
+
+
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2019/6/3 ?U?? 08:39:28 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="org.model.porder" table="PORDER" catalog="company">
+        <id name="id" type="java.lang.Integer">
+            <column name="ID" />
+            <generator class="native" />
+        </id>
+        <property name="name" type="java.lang.String">
+            <column name="NAME" />
+        </property>
+        <property name="product" type="java.lang.String">
+            <column name="PRODUCT" />
+        </property>
+        <property name="amount" type="java.lang.Integer">
+            <column name="AMOUNT" />
+        </property>
+        <property name="sum" type="java.lang.Integer">
+            <column name="SUM" />
+        </property>
+        <property name="date" type="java.lang.String">
+            <column name="DATE" />
+        </property>
+    </class>
+</hibernate-mapping>
