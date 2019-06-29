@@ -248,3 +248,35 @@ hibernate.cfg.xml
 
 
 
+//完成與資料庫連線
+
+org.DBConn
+DBConn.java
+
+
+package org.DBConn;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
+public class DBConn {
+	
+	//與資料庫連線
+	public static Session getSession()
+	{
+		Configuration c=new Configuration().configure();
+		SessionFactory sf=c.buildSessionFactory();
+		
+		Session se=sf.openSession();
+		
+		return se;
+		
+	}
+
+	public static void main(String[] args) {
+		System.out.println(DBConn.getSession());
+
+	}
+
+}
