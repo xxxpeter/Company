@@ -280,3 +280,214 @@ public class DBConn {
 	}
 
 }
+
+
+
+
+
+
+
+
+
+//做方法
+
+org.DAO
+memberDAO.java
+
+
+package org.DAO;
+
+import java.util.Iterator;
+import java.util.List;
+
+import org.DBConn.DBConn;
+import org.hibernate.SQLQuery;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.model.member;
+import org.model.porder;
+
+public class memberDAO {
+	//註冊會員
+	public static void add(member m)
+	{
+		Session se=DBConn.getSession();
+		
+		Transaction tx=se.beginTransaction();
+		
+		se.save(m);
+		
+		tx.commit();
+	}
+	
+	//檢查資料庫是否有此帳號密碼
+	public static boolean checkId(String name,String password)
+	{
+		Session se=DBConn.getSession();
+		
+		String sql="select * from member where name='"+name+"' and password='"+password+"'";
+		SQLQuery q=se.createSQLQuery(sql);
+		
+		q.addEntity("m", member.class);
+		List li=q.list();
+		
+		boolean b;
+		
+		
+		if(li.size()!=0)
+		{
+			b=true;
+			
+			
+		}
+		else
+		{
+			b=false;
+		}
+		
+		
+		return b;
+		
+		
+	}
+	
+	//檢查是否有人已使用過該帳號
+	public static boolean checkId(String name)
+	{
+		Session se=DBConn.getSession();
+		
+		String sql="select * from member where name='"+name+"'";
+		SQLQuery q=se.createSQLQuery(sql);
+		
+		q.addEntity("m", member.class);
+		List li=q.list();
+		
+		boolean b;
+		
+		
+		if(li.size()!=0)
+		{
+			b=true;
+			
+			
+		}
+		else
+		{
+			b=false;
+		}
+		
+		
+		return b;
+		
+		
+	}
+	
+	
+	//查詢所有的帳號
+	public static List queryAllPassword(){
+		String sql="select * from member";
+		Session s=DBConn.getSession();
+		SQLQuery sq=s.createSQLQuery(sql);
+		sq.addEntity("M",member.class);
+		List l=sq.list();
+		return l;
+	}
+	
+	//更新指定id會員密碼
+	public static void updateMemberPassword(int id,String password) {
+		Session se = DBConn.getSession();
+		
+		member m = (member)se.get(member.class, new Integer(id));
+		
+		m.setPassword(password);
+		
+		Transaction tx = null;
+		
+		try {
+			
+			tx = se.beginTransaction();
+			
+			se.update(m);
+			
+			tx.commit();
+			
+		} catch(Exception e) {
+			
+			if( tx != null)
+				tx.rollback();
+			e.printStackTrace();
+			
+		} finally {
+			se.close();
+		}
+	}
+	
+	//刪除指定id帳號
+	public static void deleteMemberPassword(int id) {
+		Session s=DBConn.getSession();
+		member m=(member)s.get(member.class,new Integer(id));
+		Transaction tx = null;
+		
+		try {
+			
+			tx = s.beginTransaction();
+			
+			s.delete(m);
+			
+			tx.commit();
+			
+		} catch(Exception e) {
+			
+			if( tx != null)
+				tx.rollback();
+			e.printStackTrace();
+			
+		} finally {
+			s.close();
+		}
+	}
+	
+	//檢查字串中是否有空格
+	public static boolean checkNameSpace(String s) {
+//		System.out.println(s);
+		
+		//將字串首尾空格去掉
+		s=s.trim();
+
+//		System.out.println(s);
+		
+		boolean b = true;
+		
+		//對每個字元檢查是否有空格，一有空格則回傳true
+		for(int i=0;i<s.length();i++) {
+			String string=s.charAt(i)+"";
+			if(string.equals(" ")) {
+//				System.out.println("index = "+i+" 有空格");
+				b=true;
+				break;
+			}else {
+				b=false;
+			}
+		}
+		return b;
+	}
+
+	public static void main(String[] args){
+		
+		/*	
+		member m=new member();
+		m.setName("allen");
+		m.setPassword("1234");
+		
+		memberDAO.add(m);
+		*/
+		
+//		System.out.println(memberDAO.checkId("abcw"));
+		
+//		查詢客戶訂單
+//		memberDAO.queryMemberOrder("b");
+		
+//		memberDAO.add(new member("aa"," "));
+	}
+
+}
