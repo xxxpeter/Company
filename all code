@@ -289,7 +289,7 @@ public class DBConn {
 
 
 
-//做方法
+//做DAO方法
 
 org.DAO
 memberDAO.java
@@ -488,6 +488,164 @@ public class memberDAO {
 //		memberDAO.queryMemberOrder("b");
 		
 //		memberDAO.add(new member("aa"," "));
+	}
+
+}
+
+
+
+
+
+
+
+
+
+org.DAO
+porderDAO.java
+
+
+package org.DAO;
+
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.DBConn.DBC;
+import org.DBConn.DBConn;
+import org.hibernate.SQLQuery;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.model.member;
+import org.model.porder;
+
+public class porderDAO {
+	//增加會員訂單
+	public static void add(porder p)
+	{
+		Session se=DBConn.getSession();
+		
+		Transaction tx=se.beginTransaction();
+		
+		se.save(p);
+		
+		tx.commit();
+	}
+	
+	
+	//查詢該用戶訂單
+	public static List queryHibPorder(String name) {
+		
+		// SQL語法搜尋訂單資料裡的名子
+		String sql = "SELECT * FROM company.porder where name='"+name+"'";
+		
+		// Hibernate 取得 Session
+		Session se = DBConn.getSession();
+		
+		// 建立 SQLQuery，將 sql 帶入參數使用
+		SQLQuery sq = se.createSQLQuery(sql);
+		
+		// 資料庫與模組映射
+		sq.addEntity("P", porder.class);
+		
+		// 轉成 List
+		List li = sq.list();
+		
+		return li;
+	}
+	
+	//查詢所有客戶訂單
+	public static List queryHibAllPorder() {
+		
+		String sql = "SELECT * FROM company.porder";
+		
+		Session se = DBConn.getSession();
+		
+		SQLQuery sq = se.createSQLQuery(sql);
+		
+		sq.addEntity("P", porder.class);
+		
+		List li = sq.list();
+		
+		return li;
+	}
+	
+	//更新指定id訂單產品或數量
+	public static void updateMemberPorder(int id,String product,int amount) {
+		int sum=0;
+		Session se = DBConn.getSession();
+		
+		porder p = (porder)se.get(porder.class, new Integer(id));
+		
+		p.setProduct(product);
+		p.setAmount(amount);
+		
+		if(product.equals("A") | product.equals("a")) sum=amount*1500;
+		if(product.equals("B") | product.equals("b")) sum=amount*2000;
+		if(product.equals("C") | product.equals("c")) sum=amount*2500;
+		
+		//porder p=new porder();
+		p.setSum(sum);
+		
+		Transaction tx = null;
+		
+		try {
+			
+			tx = se.beginTransaction();
+			
+			se.update(p);
+			
+			tx.commit();
+			
+		} catch(Exception e) {
+			
+			if( tx != null)
+				tx.rollback();
+			e.printStackTrace();
+			
+		} finally {
+			se.close();
+		}
+	}
+	
+	//刪除指定id訂單
+	public static void deleteMemberPorder(int id) {
+		Session se = DBConn.getSession();
+		
+		porder p = (porder)se.get(porder.class, new Integer(id));
+		
+		Transaction tx = null;
+		
+		try {
+			
+			tx = se.beginTransaction();
+			
+			se.delete(p);
+			
+			tx.commit();
+			
+		} catch(Exception e) {
+			
+			if( tx != null)
+				tx.rollback();
+			e.printStackTrace();
+			
+		} finally {
+			se.close();
+		}
+	}
+
+	public static void main(String[] args) {
+		//porder p=new porder("abcd","B",3);
+		//p.setDate("3");
+		//porderDAO.add(p);
+
 	}
 
 }
