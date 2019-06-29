@@ -213,3 +213,38 @@ porder.hbm.xml
         </property>
     </class>
 </hibernate-mapping>
+
+
+
+
+
+
+
+
+
+hibernate.cfg.xml
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+                                         "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+ <session-factory name="">
+  <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+  <property name="hibernate.connection.password">1234</property>
+  <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/company?useUnicode=true&amp;characterEncoding=UTF-8</property>
+  <property name="hibernate.connection.username">root</property>
+  <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+  <mapping resource="org/model/member.hbm.xml"/>
+  <mapping resource="org/model/porder.hbm.xml"/>
+ </session-factory>
+</hibernate-configuration>
+
+
+
+
+
+
+
+
+
