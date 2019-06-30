@@ -544,3 +544,810 @@ addOrder.jsp
 
 
 
+Content/order
+confirmOrder.jsp
+
+
+<%@ page language="java" contentType="text/html; charset=BIG5"
+    pageEncoding="BIG5"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="BIG5">
+<title>確認訂單</title>
+<link rel="stylesheet" type="text/css" href="../css/st.css">
+</head>
+<body>
+	<table width=750 align=center>
+		<tr>
+			<td class="a1" align=center><jsp:include page="../../title.jsp"></jsp:include>
+		<tr>
+			<td height=400 class="a2">
+			<table width=300 align=center>
+				<tr>
+					<td colspan=2 align=center>這是你的訂單<br>
+				<tr>
+					<td>姓名
+					<td>${P.getName() }
+				<tr>
+					<td>產品名
+					<td>${P.getProduct() }
+				<tr>
+					<td>數量
+					<td>${P.getAmount() }
+				<tr>
+					<td>總價
+					<td>${P.getSum() }
+				<tr>
+					<td colspan=2 align="center">
+					<a href="../order/finish.jsp">確定</a><br>
+					<a href="addOrder.jsp">修改訂單資料</a>
+			</table>
+			
+			
+			
+			
+		<tr>
+			<td class="a3" align=center><jsp:include page="../../end.jsp"></jsp:include>
+	
+	
+	
+	</table>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+Content/order
+finish.jsp
+
+
+<%@ page language="java" contentType="text/html; charset=BIG5"
+    pageEncoding="BIG5"
+    import="org.DAO.porderDAO"
+    import="org.model.porder"
+    import="org.springframework.context.ApplicationContext"
+	import="org.springframework.context.support.ClassPathXmlApplicationContext"
+	import="java.text.DateFormat"
+	%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="BIG5">
+<title>訂單完成</title>
+<link rel="stylesheet" type="text/css" href="../css/st.css">
+</head>
+<%
+ApplicationContext ac=new ClassPathXmlApplicationContext("spring2.xml");
+porderDAO pd=(porderDAO)ac.getBean("pd");
+
+porder p=(porder)session.getAttribute("P");
+
+p.setDate(DateFormat.getDateTimeInstance(2,2).format(System.currentTimeMillis()));
+
+pd.add(p);
+
+session.removeAttribute("P");
+%>
+<body>
+	<table width=750 align=center>
+		<tr>
+			<td class="a1" align=center><jsp:include page="../../title.jsp"></jsp:include>
+		<tr>
+			<td height=400 class="a2">
+			<table width=300 align=center>
+				<tr>
+					<td align=center><h3>訂單完成</h3>
+				<tr>
+					<td align=center>
+					<a href="../../index.jsp">home</a>
+			
+			</table>
+			
+		<tr>
+			<td class="a3" align=center><jsp:include page="../../end.jsp"></jsp:include>
+	
+	
+	
+	</table>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+//讓客戶可以查詢訂單
+
+Content/member
+query.jsp
+
+
+<%@ page language="java" contentType="text/html; charset=BIG5"
+    pageEncoding="BIG5"
+    import="java.util.List"
+    import="org.model.porder"
+    import="org.model.member"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="BIG5">
+<title>客戶管理系統查詢訂單</title>
+<link rel="stylesheet" type="text/css" href="../css/st.css">
+</head>
+<body>
+	<table width=750 align=center>
+		<tr>
+			<td class="a1" align=center><jsp:include page="../../title.jsp"></jsp:include>
+		<tr>
+			<td height=400 class="a2">
+			<form method="post" action="query">
+				<table width=300 align=center>
+					
+					<tr>
+						<td align=center><input type="submit" value="查詢" />
+						<td align="center"><a href="memberAct.jsp">上一頁</a>
+						<td align="center"><a href="login.jsp">返回客戶登入頁面</a>
+				
+				</table>
+			</form>
+			<hr>
+			
+			<table width=600 align=center border="1">
+			
+				<tr align=center bgcolor="">
+					<td>ID<td>姓名<td>產品名<td>數量<td>總價<td>日期
+					
+				<c:forEach var="rs" items="${rs}">
+					
+					<tr align=center>
+						<td><c:out value="${rs.getId()}" />
+      					<td><c:out value="${rs.getName()}" />
+      					<td><c:out value="${rs.getProduct()}" />
+      					<td><c:out value="${rs.getAmount()}" />
+      					<td><c:out value="${rs.getSum()}" />
+      					<td><c:out value="${rs.getDate()}" />
+					</tr>
+					
+				</c:forEach>	
+				
+			</table>
+			
+			<br>
+			<h3 align=center>如果資料有錯誤，請重新刷新</h3>
+			
+				
+		<tr>
+			<td class="a3" align=center><jsp:include page="../../end.jsp"></jsp:include>
+	
+	
+	
+	</table>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+//管理者
+
+Content/manager
+managerLogin.jsp
+
+
+<%@ page language="java" contentType="text/html; charset=BIG5"
+    pageEncoding="BIG5"%>
+<%@taglib prefix="s" uri="/struts-tags" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="BIG5">
+<title>管理者登入</title>
+<link rel="stylesheet" type="text/css" href="../css/st.css">
+</head>
+<body>
+	<table width=750 align=center>
+		<tr>
+			<td class="a1" align=center><jsp:include page="../../title.jsp"></jsp:include>
+		<tr>
+			<td height=400 class="a2">
+			
+				<table width=300 align=center>
+					<tr>
+						<td align=center><h3>管理者登入頁面</h3>
+						<s:form action="loginManager">
+							<s:textfield name="name" label="帳號"></s:textfield>
+							<s:textfield name="password" label="密碼"></s:textfield>
+							<s:submit value="送出"></s:submit>
+						</s:form>
+				</table>					
+		<tr>
+			<td class="a3" align=center><jsp:include page="../../end.jsp"></jsp:include>
+	
+	
+	
+	</table>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+Content/error
+managerLoginError.jsp
+
+
+<%@ page language="java" contentType="text/html; charset=BIG5"
+    pageEncoding="BIG5"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="BIG5">
+<title>管理員登入失敗</title>
+<link rel="stylesheet" type="text/css" href="../css/st.css">
+</head>
+<body>
+	<table width=750 align=center>
+		<tr>
+			<td class="a1" align=center><jsp:include page="../../title.jsp"></jsp:include>
+		<tr>
+			<td height=400 class="a2">
+			<table width=300 align=center>
+				<tr>
+					<td align=center><h3>管理員登入失敗</h3>
+				<tr>
+					<td align="center"><a href="../../index.jsp">home</a>
+			
+			</table>
+		<tr>
+			<td class="a3" align=center><jsp:include page="../../end.jsp"></jsp:include>
+	
+	
+	
+	</table>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+Content/manager
+managerAct.jsp
+
+
+<%@ page language="java" contentType="text/html; charset=BIG5"
+    pageEncoding="BIG5"%>
+<%@taglib prefix="s" uri="/struts-tags" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="BIG5">
+<title>管理者系統</title>
+<link rel="stylesheet" type="text/css" href="../css/st.css">
+</head>
+<body>
+	<table width=750 align=center>
+		<tr>
+			<td class="a1" align=center><jsp:include page="../../title.jsp"></jsp:include>
+		<tr>
+			<td height=400 class="a2">
+			<h3 align=center>歡迎來到管理者系統</h3>
+				<table width=300 align=center border=1>
+					<tr>
+						<td align=center colspan=2>管理者系統
+					<tr>
+						<td align=center><a href="queryPassword.jsp">查詢客戶帳號</a>
+						<td align=center><a href="queryMemberOrder.jsp">查詢客戶訂單</a>
+					<tr>
+						<td align=center><a href="updatePassword.jsp">修改客戶密碼</a>
+						<td align=center><a href="updatePorder.jsp">修改客戶訂單</a>
+					<tr>
+						<td align=center><a href="deletePassword.jsp">刪除客戶帳號</a>
+						<td align=center><a href="deletePorder.jsp">刪除客戶訂單</a>
+				</table>					
+		<tr>
+			<td class="a3" align=center><jsp:include page="../../end.jsp"></jsp:include>
+	
+	
+	
+	</table>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+Content/manager
+queryMemberOrder.jsp
+
+
+<%@ page language="java" contentType="text/html; charset=BIG5"
+    pageEncoding="BIG5"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="BIG5">
+<title>查詢訂單</title>
+<link rel="stylesheet" type="text/css" href="../css/st.css">
+</head>
+<body>
+	<table width=750 align=center>
+		<tr>
+			<td class="a1" align=center><jsp:include page="../../title.jsp"></jsp:include>
+		<tr>
+			<td height=400 class="a2">
+			<form method="post" action="queryAllPorder">
+				<table width=100 align=center>
+					
+					<tr>
+						<td align=center><input type="submit" value="查詢全部訂單" />
+				
+				</table>
+			</form>
+			<form method="post" action="queryMemberPorder">
+				<table width=450 align=center>
+					<tr>
+						<td align=center>name = <input type="text" name="name" size=11><input type="submit" value="指定查詢" />
+						<td align="center"><a href="managerAct.jsp">上一頁</a>
+						<td align="center"><a href="../../index.jsp">home</a>
+				</table>
+			</form>
+			<hr>
+			
+			<table width=600 align=center border="1">
+			
+				<tr align=center bgcolor="">
+					<td>ID<td>姓名<td>產品名<td>數量<td>總價<td>日期
+					
+				<c:forEach var="rs" items="${rs}">
+					
+					<tr align=center>
+						<td><c:out value="${rs.getId()}" />
+      					<td><c:out value="${rs.getName()}" />
+      					<td><c:out value="${rs.getProduct()}" />
+      					<td><c:out value="${rs.getAmount()}" />
+      					<td><c:out value="${rs.getSum()}" />
+      					<td><c:out value="${rs.getDate()}" />
+					</tr>
+					
+				</c:forEach>	
+				
+			</table>
+			
+			<br>
+			<h3 align=center>如果資料有錯誤，請重新刷新</h3>
+				
+		<tr>
+			<td class="a3" align=center><jsp:include page="../../end.jsp"></jsp:include>
+	
+	
+	
+	</table>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+Content/manager
+queryPassword.jsp
+
+
+<%@ page language="java" contentType="text/html; charset=BIG5"
+    pageEncoding="BIG5"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="BIG5">
+<title>查詢帳號</title>
+<link rel="stylesheet" type="text/css" href="../css/st.css">
+</head>
+<body>
+	<table width=750 align=center>
+		<tr>
+			<td class="a1" align=center><jsp:include page="../../title.jsp"></jsp:include>
+		<tr>
+			<td height=400 class="a2">
+			<form method="post" action="queryPassword">
+				<table width=300 align=center>
+					
+					<tr>
+						<td align=center><input type="submit" value="查詢全部帳號" />
+						<td align="center"><a href="managerAct.jsp">上一頁</a>
+						<td align="center"><a href="../../index.jsp">home</a>
+				
+				</table>
+			</form>
+			<hr>
+			
+			<table width=400 align=center border="1">
+			
+				<tr align=center bgcolor="">
+					<td>ID<td>NAME<td>PASSWORD
+					
+				<c:forEach var="r" items="${r}">
+					
+					<tr align=center>
+						<td><c:out value="${r.getId()}" />
+      					<td><c:out value="${r.getName()}" />
+      					<td><c:out value="${r.getPassword()}" />
+					</tr>
+					
+				</c:forEach>	
+				
+			</table>
+			
+			<br>
+			<h3 align=center>如果資料有錯誤，請重新刷新</h3>
+				
+		<tr>
+			<td class="a3" align=center><jsp:include page="../../end.jsp"></jsp:include>
+	
+	
+	
+	</table>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+Content/manager
+updatePorder.jsp
+
+
+<%@ page language="java" contentType="text/html; charset=BIG5"
+    pageEncoding="BIG5"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="BIG5">
+<title>修改訂單</title>
+<link rel="stylesheet" type="text/css" href="../css/st.css">
+</head>
+<body>
+	<table width=750 align=center>
+		<tr>
+			<td class="a1" align=center><jsp:include page="../../title.jsp"></jsp:include>
+		<tr>
+			<td height=400 class="a2">
+			<form method="post" action="queryAllPorder2">
+				<table width=100 align=center>
+					
+					<tr>
+						<td align=center><input type="submit" value="查詢全部訂單" />
+				
+				</table>
+			</form>
+			<form method="post" action="updatePorder">
+				<table width=450 align=center>
+					<tr>
+						<td align=center>  id = <input type="text" name="id" size=5 value=1>&nbsp;&nbsp;
+									  product = <input type="text" name="product" size=5 value=A>&nbsp;&nbsp;
+									   amount = <input type="text" name="amount" size=5 value=1>&nbsp;&nbsp;
+									            <input type="submit" value="修改" />
+					<tr>	
+						<td align="center"><a href="managerAct.jsp">上一頁</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="../../index.jsp">home</a>
+				</table>
+			</form>
+			<hr>
+			
+			<table width=600 align=center border="1">
+			
+				<tr align=center bgcolor="">
+					<td>ID<td>姓名<td>產品名<td>數量<td>總價<td>日期
+					
+				<c:forEach var="rs" items="${rs}">
+					
+					<tr align=center>
+						<td><c:out value="${rs.getId()}" />
+      					<td><c:out value="${rs.getName()}" />
+      					<td><c:out value="${rs.getProduct()}" />
+      					<td><c:out value="${rs.getAmount()}" />
+      					<td><c:out value="${rs.getSum()}" />
+      					<td><c:out value="${rs.getDate()}" />
+					</tr>
+					
+				</c:forEach>	
+				
+			</table>
+			
+			<br>
+			<h3 align=center>如果資料有錯誤，請重新刷新</h3>
+				
+		<tr>
+			<td class="a3" align=center><jsp:include page="../../end.jsp"></jsp:include>
+	
+	
+	
+	</table>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+Content/manager
+updatePassword.jsp
+
+
+<%@ page language="java" contentType="text/html; charset=BIG5"
+    pageEncoding="BIG5"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="BIG5">
+<title>修改密碼</title>
+<link rel="stylesheet" type="text/css" href="../css/st.css">
+</head>
+<body>
+	<table width=750 align=center>
+		<tr>
+			<td class="a1" align=center><jsp:include page="../../title.jsp"></jsp:include>
+		<tr>
+			<td height=400 class="a2">
+			<form method="post" action="queryPassword2">
+				<table width=100 align=center>
+					
+					<tr>
+						<td align=center><input type="submit" value="查詢全部帳號" />
+				
+				</table>
+			</form>
+			<form method="post" action="updatePassword">
+				<table width=450 align=center>
+					<tr>
+						<td align=center>  id = <input type="text" name="id" size=5 value=1>&nbsp;&nbsp;
+									  password = <input type="text" name="password" size=12 value=0000>&nbsp;&nbsp;
+									            <input type="submit" value="修改" />
+					<tr>	
+						<td align="center"><a href="managerAct.jsp">上一頁</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="../../index.jsp">home</a>
+				</table>
+			</form>
+			<hr>
+			
+			<table width=400 align=center border="1">
+			
+				<tr align=center bgcolor="">
+					<td>ID<td>NAME<td>PASSWORD
+					
+				<c:forEach var="r" items="${r}">
+					
+					<tr align=center>
+						<td><c:out value="${r.getId()}" />
+      					<td><c:out value="${r.getName()}" />
+      					<td><c:out value="${r.getPassword()}" />
+					</tr>
+					
+				</c:forEach>	
+				
+			</table>
+			
+			<br>
+			<h3 align=center>如果資料有錯誤，請重新刷新</h3>
+				
+		<tr>
+			<td class="a3" align=center><jsp:include page="../../end.jsp"></jsp:include>
+	
+	
+	
+	</table>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+Content/manager
+deletePorder.jsp
+
+
+<%@ page language="java" contentType="text/html; charset=BIG5"
+    pageEncoding="BIG5"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="BIG5">
+<title>刪除訂單</title>
+<link rel="stylesheet" type="text/css" href="../css/st.css">
+</head>
+<body>
+	<table width=750 align=center>
+		<tr>
+			<td class="a1" align=center><jsp:include page="../../title.jsp"></jsp:include>
+		<tr>
+			<td height=400 class="a2">
+			<form method="post" action="queryAllPorder3">
+				<table width=100 align=center>
+					
+					<tr>
+						<td align=center><input type="submit" value="查詢全部訂單" />
+				
+				</table>
+			</form>
+			<form method="post" action="deletePorder">
+				<table width=450 align=center>
+					<tr>
+						<td align=center>  id = <input type="text" name="id" size=5 value=""><input type="submit" value="刪除" />
+						<td align="center"><a href="managerAct.jsp">上一頁</a>
+						<td align="center"><a href="../../index.jsp">home</a>
+				</table>
+			</form>
+			<hr>
+			
+			<table width=600 align=center border="1">
+			
+				<tr align=center bgcolor="">
+					<td>ID<td>姓名<td>產品名<td>數量<td>總價<td>日期
+					
+				<c:forEach var="rs" items="${rs}">
+					
+					<tr align=center>
+						<td><c:out value="${rs.getId()}" />
+      					<td><c:out value="${rs.getName()}" />
+      					<td><c:out value="${rs.getProduct()}" />
+      					<td><c:out value="${rs.getAmount()}" />
+      					<td><c:out value="${rs.getSum()}" />
+      					<td><c:out value="${rs.getDate()}" />
+					</tr>
+					
+				</c:forEach>	
+				
+			</table>
+			
+			<br>
+			<h3 align=center>如果資料有錯誤，請重新刷新</h3>
+				
+		<tr>
+			<td class="a3" align=center><jsp:include page="../../end.jsp"></jsp:include>
+	
+	
+	
+	</table>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+Content/manager
+deletePassword.jsp
+
+
+<%@ page language="java" contentType="text/html; charset=BIG5"
+    pageEncoding="BIG5"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="BIG5">
+<title>刪除帳號</title>
+<link rel="stylesheet" type="text/css" href="../css/st.css">
+</head>
+<body>
+	<table width=750 align=center>
+		<tr>
+			<td class="a1" align=center><jsp:include page="../../title.jsp"></jsp:include>
+		<tr>
+			<td height=400 class="a2">
+			<form method="post" action="queryPassword3">
+				<table width=100 align=center>
+					
+					<tr>
+						<td align=center><input type="submit" value="查詢全部帳號" />
+				
+				</table>
+			</form>
+			<form method="post" action="deletePassword">
+				<table width=450 align=center>
+					<tr>
+						<td align=center>  id = <input type="text" name="id" size=5 value=""><input type="submit" value="刪除" />
+						<td align="center"><a href="managerAct.jsp">上一頁</a>
+						<td align="center"><a href="../../index.jsp">home</a>
+				</table>
+			</form>
+			<hr>
+			
+			<table width=400 align=center border="1">
+			
+				<tr align=center bgcolor="">
+					<td>ID<td>NAME<td>PASSWORD
+					
+				<c:forEach var="r" items="${r}">
+					
+					<tr align=center>
+						<td><c:out value="${r.getId()}" />
+      					<td><c:out value="${r.getName()}" />
+      					<td><c:out value="${r.getPassword()}" />
+					</tr>
+					
+				</c:forEach>	
+				
+			</table>
+			
+			<br>
+			<h3 align=center>如果資料有錯誤，請重新刷新</h3>
+				
+		<tr>
+			<td class="a3" align=center><jsp:include page="../../end.jsp"></jsp:include>
+	
+	
+	
+	</table>
+
+</body>
+</html>
