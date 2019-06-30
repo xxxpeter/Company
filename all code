@@ -690,6 +690,7 @@ org.action
 add.MemberAction.java
 
 
+//註冊失敗或成功
 package org.action;
 
 import org.DAO.memberDAO;
@@ -746,3 +747,12 @@ public class addMemberActon extends ActionSupport{
 	
 
 }
+
+
+
+
+
+
+
+
+
