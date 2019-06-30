@@ -1462,7 +1462,7 @@ org.action
 queryPasswordAction3.java
 
 
-//查詢所有帳號(準備刪除帳號
+//查詢所有帳號(準備刪除帳號)
 package org.action;
 
 import java.util.List;
