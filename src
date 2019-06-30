@@ -1544,3 +1544,13 @@ public class deletePasswordAction extends ActionSupport{
 		this.id = id;
 	}
 }
+
+
+
+
+
+
+
+
+
+//完成struts.xml
