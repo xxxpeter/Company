@@ -30,3 +30,517 @@ web.xml
 
 
 
+Content/css
+st.css
+
+
+@charset "BIG5";
+.a1
+{
+	
+	background-color:#071F46;
+	color:white;
+}
+.a2
+{
+	
+	background-color:#8CA6B5;
+}
+.a3
+{
+	
+	background-color:#100C22;
+	color:white;
+}
+
+
+
+
+
+
+
+
+
+title.jsp
+
+
+<%@ page language="java" contentType="text/html; charset=BIG5"
+    pageEncoding="BIG5"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="BIG5">
+<title>標頭</title>
+</head>
+<body>
+<h1>SUPER電子商城</h1>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+end.jsp
+
+
+<%@ page language="java" contentType="text/html; charset=BIG5"
+    pageEncoding="BIG5"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="BIG5">
+<title>標尾</title>
+</head>
+<body>
+<h4>新北市三重區三張街</h4>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+house.jsp
+
+
+<%@ page language="java" contentType="text/html; charset=BIG5"
+    pageEncoding="BIG5"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="BIG5">
+<title>SUPER電子商城</title>
+<link rel="stylesheet" type="text/css" href="Content/css/st.css">
+</head>
+<body>
+	<table width=750 align=center>
+		<tr>
+			<td class="a1" align=center><jsp:include page="title.jsp"></jsp:include>
+		<tr>
+			<td height=400 class="a2">
+			<table width=300 align=center>
+				<tr>
+					<td align=center><h2>歡迎來到SUPER電子商城</h2>
+				<tr>
+					<td align="center"><a href="index.jsp">進入</a>
+			
+			</table>
+		<tr>
+			<td class="a3" align=center><jsp:include page="end.jsp"></jsp:include>
+	
+	
+	
+	</table>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+index.jsp
+
+
+<%@ page language="java" contentType="text/html; charset=BIG5"
+    pageEncoding="BIG5"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="BIG5">
+<title>身分類別</title>
+<link rel="stylesheet" type="text/css" href="Content/css/st.css">
+</head>
+<body>
+	<table width=750 align=center>
+		<tr>
+			<td class="a1" align=center><jsp:include page="title.jsp"></jsp:include>
+		<tr>
+			<td height=400 class="a2">
+			<table width=300 align=center>
+				<tr>
+					<td align=center><h3>請選擇身分類別</h3>
+			</table>
+			<table width=150 align=center border=1>
+				<tr>
+					<td align="center"><a href="Content/member/login.jsp">客戶</a>
+				<tr>
+					<td align="center"><a href="Content/manager/managerLogin.jsp">管理者</a>
+			</table>
+		<tr>
+			<td class="a3" align=center><jsp:include page="end.jsp"></jsp:include>
+	
+	
+	
+	</table>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+Content/member
+login.jsp
+
+
+<%@ page language="java" contentType="text/html; charset=BIG5"
+    pageEncoding="BIG5"%>
+<%@taglib prefix="s" uri="/struts-tags" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="BIG5">
+<title>客戶登入</title>
+<link rel="stylesheet" type="text/css" href="../css/st.css">
+</head>
+<body>
+	<table width=750 align=center>
+		<tr>
+			<td class="a1" align=center><jsp:include page="../../title.jsp"></jsp:include>
+		<tr>
+			<td height=400 class="a2">
+			
+				<table width=300 align=center>
+					<tr>
+						<td align=center><h3>客戶登入頁面</h3>
+						<s:form action="login">
+							<s:textfield name="name" label="帳號"></s:textfield>
+							<s:textfield name="password" label="密碼"></s:textfield>
+							<s:submit value="送出"></s:submit>
+							<a href="add.jsp">註冊</a>
+						</s:form>
+				</table>					
+		<tr>
+			<td class="a3" align=center><jsp:include page="../../end.jsp"></jsp:include>
+	
+	
+	
+	</table>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+Content/error
+loginError.jsp
+
+
+<%@ page language="java" contentType="text/html; charset=BIG5"
+    pageEncoding="BIG5"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="BIG5">
+<title>客戶登入失敗</title>
+<link rel="stylesheet" type="text/css" href="../css/st.css">
+</head>
+<body>
+	<table width=750 align=center>
+		<tr>
+			<td class="a1" align=center><jsp:include page="../../title.jsp"></jsp:include>
+		<tr>
+			<td height=400 class="a2">
+			<table width=300 align=center>
+				<tr>
+					<td align=center><h3>客戶登入失敗</h3>
+				<tr>
+					<td align="center"><a href="../member/login.jsp">返回客戶登入頁面</a>
+			
+			</table>
+		<tr>
+			<td class="a3" align=center><jsp:include page="../../end.jsp"></jsp:include>
+	
+	
+	
+	</table>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+Content/member
+add.jsp
+
+
+<%@ page language="java" contentType="text/html; charset=BIG5"
+    pageEncoding="BIG5"%>
+<%@taglib prefix="s" uri="/struts-tags" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="BIG5">
+<title>客戶註冊</title>
+<link rel="stylesheet" type="text/css" href="../css/st.css">
+</head>
+<body>
+	<table width=750 align=center>
+		<tr>
+			<td class="a1" align=center><jsp:include page="../../title.jsp"></jsp:include>
+		<tr>
+			<td height=400 class="a2">
+			<table width=300 align=center>
+					<tr>
+						<td align=center><h3>客戶註冊頁面</h3>
+						<s:form action="addMem">
+							<s:textfield name="name" label="帳號"></s:textfield>
+							<s:textfield name="password" label="密碼"></s:textfield>
+							<s:submit value="送出"></s:submit>
+							
+						</s:form>
+				</table>				
+		<tr>
+			<td class="a3" align=center><jsp:include page="../../end.jsp"></jsp:include>
+	
+	
+	
+	</table>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+Content/error
+addMemberError.jsp
+
+
+<%@ page language="java" contentType="text/html; charset=BIG5"
+    pageEncoding="BIG5"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="BIG5">
+<title>註冊失敗</title>
+<link rel="stylesheet" type="text/css" href="../css/st.css">
+</head>
+<body>
+	<table width=750 align=center>
+		<tr>
+			<td class="a1" align=center><jsp:include page="../../title.jsp"></jsp:include>
+		<tr>
+			<td height=400 class="a2">
+			<table width=400 align=center>
+				<tr>
+					<td align=center><h3>註冊失敗，帳號名稱可能已有人使用過</h3>
+				<tr>
+					<td align="center"><a href="../member/login.jsp">返回客戶登入頁面</a>
+			
+			</table>
+		<tr>
+			<td class="a3" align=center><jsp:include page="../../end.jsp"></jsp:include>
+	
+	
+	
+	</table>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+addSuccess.jsp
+
+
+<%@ page language="java" contentType="text/html; charset=BIG5"
+    pageEncoding="BIG5"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="BIG5">
+<title>註冊成功</title>
+<link rel="stylesheet" type="text/css" href="Content/css/st.css">
+</head>
+<body>
+	<table width=750 align=center>
+		<tr>
+			<td class="a1" align=center><jsp:include page="title.jsp"></jsp:include>
+		<tr>
+			<td height=400 class="a2">
+			<table width=300 align=center>
+				<tr>
+					<td align=center>註冊成功
+				<tr>
+					<td align=center><a href="Content/member/login.jsp">返回登入頁面</a>
+			</table>
+		<tr>
+			<td class="a3" align=center><jsp:include page="end.jsp"></jsp:include>
+	
+	
+	
+	</table>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+Content/member
+memberAct.jsp
+
+
+<%@ page language="java" contentType="text/html; charset=BIG5"
+    pageEncoding="BIG5"
+    import="org.apache.struts2.ServletActionContext"
+    import="org.model.member"%>
+<%@taglib prefix="s" uri="/struts-tags" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="BIG5">
+<title>客戶管理系統</title>
+<link rel="stylesheet" type="text/css" href="../css/st.css">
+</head>
+<%
+HttpServletRequest r=ServletActionContext.getRequest();
+member m=(member)r.getSession().getAttribute("M");
+%>
+<body>
+	<table width=750 align=center>
+		<tr>
+			<td class="a1" align=center><jsp:include page="../../title.jsp"></jsp:include>
+		<tr>
+			<td height=400 class="a2">
+			
+				<table width=400 align=center>
+					<tr>
+						<td align=center><h3><%=m.getName() %>，你好，歡迎來到客戶管理系統</h3>
+				</table>
+				<table width=150 align=center border=1>
+				<tr>
+					<td align=center><a href="../order/addOrder.jsp">新增訂單</a>  
+				<tr>
+					<td align=center><a href="query.jsp">查詢訂單</a>
+				</table>			
+		<tr>
+			<td class="a3" align=center><jsp:include page="../../end.jsp"></jsp:include>
+	
+	
+	
+	</table>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+Content/order
+addOrder.jsp
+
+
+<%@ page language="java" contentType="text/html; charset=BIG5"
+    pageEncoding="BIG5"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="BIG5">
+<title>新增訂單</title>
+<link rel="stylesheet" type="text/css" href="../css/st.css">
+</head>
+<body>
+	<table width=750 align=center>
+		<tr>
+			<td class="a1" align=center><jsp:include page="../../title.jsp"></jsp:include>
+		<tr>
+			<td height=400 class="a2">
+			<form action="addOrder" method="post">
+				<table width=300 align=center>
+					<tr>
+						<td colspan=2 align=center>新增訂單
+					<tr>
+						<td>產品
+						<td>
+							<select name="product">
+								<option value="A">A  1500元
+								<option value="B">B  2000元
+								<option value="C">C  2500元
+							</select>
+					<tr>
+						<td>數量
+						<td>
+							<input type="text" name="amount" value="0">
+					<tr>
+						<td colspan=2 align=center>
+						<input type="submit" value="送出">
+				
+				
+				
+				</table>
+			
+			
+			</form>
+		<tr>
+			<td class="a3" align=center><jsp:include page="../../end.jsp"></jsp:include>
+	
+	
+	
+	</table>
+
+</body>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
