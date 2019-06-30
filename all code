@@ -675,3 +675,74 @@ spring2.xml
     <bean id="md" class="org.DAO.memberDAO"></bean>
     <bean id="pd" class="org.DAO.porderDAO"></bean>
 </beans>
+
+
+
+
+
+
+
+
+
+//方法如何實踐
+
+org.action
+add.MemberAction.java
+
+
+package org.action;
+
+import org.DAO.memberDAO;
+import org.model.member;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.opensymphony.xwork2.ActionSupport;
+
+public class addMemberActon extends ActionSupport{
+	private String name;
+	private String password;
+	
+	public String execute() throws Exception
+	{
+		//利用spring，以md呼叫memberDAO的方法
+		ApplicationContext ac=new ClassPathXmlApplicationContext("spring2.xml");
+		memberDAO md=(memberDAO)ac.getBean("md");
+		
+		//帳號如果有人註冊過，則回傳true(註冊失敗)
+		boolean b=md.checkId(name.trim());
+		
+		//首尾可以有空格，但在字串中，如果有空格則註冊失敗。(例如 : "abc efg"這字串會註冊失敗；"      abcefg   "這字串就算首尾有空格也會註冊成功)
+		if(b==true || name==null || name.trim().equals("") || password==null || password.trim().equals("") || 
+				      memberDAO.checkNameSpace(name) || memberDAO.checkNameSpace(password))
+		{		
+			return ERROR;
+		}
+		else
+		{
+		//帳號密碼去掉首尾空格註冊
+			md.add(new member(name.trim(),password.trim()));
+			
+			return SUCCESS;
+		}
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	
+
+}
