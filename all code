@@ -756,3 +756,203 @@ public class addMemberActon extends ActionSupport{
 
 
 
+
+org.action
+loginAction.java
+
+
+//登入成功或失敗
+package org.action;
+
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.DAO.memberDAO;
+import org.apache.struts2.ServletActionContext;
+import org.model.member;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.opensymphony.xwork2.ActionContext;
+import com.opensymphony.xwork2.ActionSupport;
+
+public class loginAction extends ActionSupport{
+	private String name;
+	private String password;
+	
+	public String execute() throws Exception
+	{
+		ApplicationContext ac=new ClassPathXmlApplicationContext("spring2.xml");
+		memberDAO md=(memberDAO)ac.getBean("md");
+		
+		//判斷帳號密碼是否已存在資料庫中，如果存在，則回傳true(登入成功)
+		boolean b=md.checkId(name.trim(), password.trim());
+		
+		member m;
+		if(b==true)
+		{
+			m=new member(name.trim(),password.trim());
+			
+			//將m的資料存放在session中，以M做代號 
+			Map session = ActionContext.getContext().getSession();	
+			session.put("M", m);
+		
+			return SUCCESS;
+		}
+		else
+		{
+			return ERROR;
+		}
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	
+
+}
+
+
+
+
+
+
+
+
+
+org.action
+addOrder.java
+
+
+//訂單
+package org.action;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.struts2.ServletActionContext;
+import org.model.member;
+import org.model.porder;
+
+import com.opensymphony.xwork2.ActionContext;
+import com.opensymphony.xwork2.ActionSupport;
+
+public class addOrder extends ActionSupport{
+	
+	private String product;
+	private int amount;
+	
+	public String execute() throws Exception
+	{
+		//取得M的session值，再轉型為member
+		HttpServletRequest  request= ServletActionContext.getRequest(); 
+		member m=(member)request.getSession().getAttribute("M");
+		
+		//將member的名稱。產品、數量存放在porder中
+		porder p=new porder(m.getName(),product,amount);
+		
+		//將p的資料存放在session中，以P做代號 
+		request.getSession().setAttribute("P", p);
+		
+		return SUCCESS;
+		
+	}
+
+	public String getProduct() {
+		return product;
+	}
+
+	public void setProduct(String product) {
+		this.product = product;
+	}
+
+	public int getAmount() {
+		return amount;
+	}
+
+	public void setAmount(int amount) {
+		this.amount = amount;
+	}
+	
+	
+
+}
+
+
+
+
+
+
+
+
+
+org.action
+queryAction.java
+
+
+//客戶查詢訂單
+package org.action;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.DAO.porderDAO;
+import org.apache.struts2.ServletActionContext;
+import org.model.member;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.opensymphony.xwork2.ActionSupport;
+
+public class queryAction extends ActionSupport{
+	
+//	private String name;
+
+	public String execute() throws Exception {
+		
+		ApplicationContext a = new ClassPathXmlApplicationContext("spring2.xml");
+		porderDAO pd= (porderDAO) a.getBean("pd");
+		
+		HttpServletRequest  request= ServletActionContext.getRequest();
+		member m=(member)request.getSession().getAttribute("M");
+		
+		//查詢該客戶訂單
+		List list = pd.queryHibPorder(m.getName());
+		
+		request.getSession().setAttribute("rs", list);
+		
+		return SUCCESS;
+	}
+	
+//	public String getName() {
+//		return name;
+//	}
+//
+//	public void setName(String name) {
+//		this.name = name;
+//	}
+
+}
+
+
+
+
+
+
+
+
+
