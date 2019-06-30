@@ -956,3 +956,194 @@ public class queryAction extends ActionSupport{
 
 
 
+org.action
+loginManagerAction.java
+
+
+//管理者登入或失敗
+package org.action;
+
+import org.model.member;
+
+import com.opensymphony.xwork2.ActionSupport;
+
+public class loginManagerAction extends ActionSupport{
+	private String name;
+	private String password;
+	
+	member m;
+	
+	public String execute()throws Exception{
+		m=new member(name,password);
+		
+		//帳號與密碼要符合下面，才能登入管理者頁面
+		if(m.getName().equals("boss") & m.getPassword().equals("1234")) {
+			return SUCCESS;
+		}else {
+			return ERROR;
+		}
+	}
+	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+}
+
+
+
+
+
+
+
+
+
+
+org.action
+queryAllPorderAction.java
+
+
+//查詢所有客戶訂單
+package org.action;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.DAO.porderDAO;
+import org.apache.struts2.ServletActionContext;
+import org.model.member;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.opensymphony.xwork2.ActionSupport;
+
+public class queryAllPorderAction extends ActionSupport{
+	public String execute() throws Exception {
+		
+		ApplicationContext a = new ClassPathXmlApplicationContext("spring2.xml");
+		porderDAO pd= (porderDAO) a.getBean("pd");
+		
+		HttpServletRequest  request= ServletActionContext.getRequest();
+		
+		List list = pd.queryHibAllPorder();
+		
+		request.getSession().setAttribute("rs", list);
+		
+		return SUCCESS;
+	}
+	
+}
+
+
+
+
+
+
+
+
+
+org.action
+queryMemberPorderAction.java
+
+
+//查詢指定客戶訂單
+package org.action;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.DAO.porderDAO;
+import org.apache.struts2.ServletActionContext;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.opensymphony.xwork2.ActionSupport;
+
+public class queryMemberPorderAction extends ActionSupport{
+	private String name;
+	
+
+	public String execute() throws Exception {
+		
+		ApplicationContext a = new ClassPathXmlApplicationContext("spring2.xml");
+		porderDAO pd= (porderDAO) a.getBean("pd");
+		
+		HttpServletRequest  request= ServletActionContext.getRequest();
+		
+		List list = pd.queryHibPorder(name);
+		
+		request.getSession().setAttribute("rs", list);
+		
+		return SUCCESS;
+	}
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+}
+
+
+
+
+
+
+
+
+
+org.action
+queryPasswordAction.java
+
+
+//查詢所有帳號
+package org.action;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.DAO.memberDAO;
+import org.apache.struts2.ServletActionContext;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.opensymphony.xwork2.ActionSupport;
+
+public class queryPasswordAction extends ActionSupport{
+	
+	public String execute()throws Exception{
+		ApplicationContext a=new ClassPathXmlApplicationContext("spring2.xml");
+		memberDAO md=(memberDAO)a.getBean("md");
+		
+		List li=md.queryAllPassword();
+		
+		HttpServletRequest request=ServletActionContext.getRequest();
+		request.getSession().setAttribute("r",li);
+		
+		return SUCCESS;
+	}
+}
+
+
+
+
+
+
+
+
+
