@@ -1261,3 +1261,286 @@ public class updatePorderAction extends ActionSupport{
 
 
 
+org.action
+qureyPasswordAction2.java
+
+
+//查詢所有帳號(準備更改密碼)
+package org.action;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.DAO.memberDAO;
+import org.apache.struts2.ServletActionContext;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.opensymphony.xwork2.ActionSupport;
+
+public class queryPasswordAction2 extends ActionSupport{
+	public String execute()throws Exception{
+		ApplicationContext a=new ClassPathXmlApplicationContext("spring2.xml");
+		memberDAO md=(memberDAO)a.getBean("md");
+		
+		List li=md.queryAllPassword();
+		
+		HttpServletRequest request=ServletActionContext.getRequest();
+		request.getSession().setAttribute("r",li);
+		
+		return SUCCESS;
+	}
+}
+
+
+
+
+
+
+
+
+
+org.action
+updatePasswordAction.java
+
+
+//更改密碼
+package org.action;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.DAO.memberDAO;
+import org.apache.struts2.ServletActionContext;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.opensymphony.xwork2.ActionSupport;
+
+public class updatePasswordAction extends ActionSupport{
+	private int id;
+	private String password;
+
+	public String execute()throws Exception{
+		ApplicationContext a=new ClassPathXmlApplicationContext("spring2.xml");
+		memberDAO md=(memberDAO)a.getBean("md");
+		
+		//更新指定id會員密碼
+		md.updateMemberPassword(id, password);
+		
+		List l=md.queryAllPassword();
+		
+		HttpServletRequest request=ServletActionContext.getRequest();
+		request.getSession().setAttribute("r",l);
+		
+		return SUCCESS;
+	}
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+}
+
+
+
+
+
+
+
+
+
+org.action
+queryAllPorderAction3.java
+
+
+//查詢所有訂單(準備刪除訂單)
+package org.action;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.DAO.porderDAO;
+import org.apache.struts2.ServletActionContext;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.opensymphony.xwork2.ActionSupport;
+
+public class queryAllPorderAction3 extends ActionSupport{
+public String execute() throws Exception {
+		
+		ApplicationContext a = new ClassPathXmlApplicationContext("spring2.xml");
+		porderDAO pd= (porderDAO) a.getBean("pd");
+		
+		HttpServletRequest  request= ServletActionContext.getRequest();
+		
+		List list = pd.queryHibAllPorder();
+		
+		request.getSession().setAttribute("rs", list);
+		
+		return SUCCESS;
+	}
+}
+
+
+
+
+
+
+
+
+
+org.action
+deleterPorderAction.java
+
+
+//刪除特定訂單
+package org.action;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.DAO.porderDAO;
+import org.apache.struts2.ServletActionContext;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.opensymphony.xwork2.ActionSupport;
+
+public class deletePorderAction extends ActionSupport{
+	private int id;
+	
+	public String execute()throws Exception{
+		ApplicationContext a=new ClassPathXmlApplicationContext("spring2.xml");
+		porderDAO p=(porderDAO)a.getBean("pd");
+		
+		//將指定的id訂單刪除
+		p.deleteMemberPorder(id);
+		
+		//查詢所有客戶訂單
+		List l=p.queryHibAllPorder();
+		
+		HttpServletRequest request=ServletActionContext.getRequest();
+		request.getSession().setAttribute("rs", l);
+		
+		return SUCCESS;
+	}
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id=id;
+	}
+}
+
+
+
+
+
+
+
+
+
+org.action
+queryPasswordAction3.java
+
+
+//查詢所有帳號(準備刪除帳號
+package org.action;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.DAO.memberDAO;
+import org.apache.struts2.ServletActionContext;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.opensymphony.xwork2.ActionSupport;
+
+public class queryPasswordAction3 extends ActionSupport{
+	public String execute()throws Exception{
+		ApplicationContext a=new ClassPathXmlApplicationContext("spring2.xml");
+		memberDAO md=(memberDAO)a.getBean("md");
+		
+		List li=md.queryAllPassword();
+		
+		HttpServletRequest request=ServletActionContext.getRequest();
+		request.getSession().setAttribute("r",li);
+		
+		return SUCCESS;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+org.action
+deletePasswordAction.java
+
+
+//刪除特定帳號
+package org.action;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.DAO.memberDAO;
+import org.apache.struts2.ServletActionContext;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.opensymphony.xwork2.ActionSupport;
+
+public class deletePasswordAction extends ActionSupport{
+	int id;
+
+	public String execute()throws Exception{
+		ApplicationContext a=new ClassPathXmlApplicationContext("spring2.xml");
+		memberDAO m=(memberDAO)a.getBean("md");
+		
+		//將指定的id帳號刪除
+		m.deleteMemberPassword(id);
+		
+		//查詢所有帳號
+		List l=m.queryAllPassword();
+		
+		HttpServletRequest request=ServletActionContext.getRequest();
+		request.getSession().setAttribute("r",l);
+		
+		return SUCCESS;
+	}
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+}
