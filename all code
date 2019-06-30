@@ -1147,3 +1147,117 @@ public class queryPasswordAction extends ActionSupport{
 
 
 
+org.action
+queryAllPorderAction2.java
+
+
+//查詢所有訂單(準備更改訂單)
+package org.action;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.DAO.porderDAO;
+import org.apache.struts2.ServletActionContext;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.opensymphony.xwork2.ActionSupport;
+
+public class queryAllPorderAction2 extends ActionSupport{
+public String execute() throws Exception {
+		
+		ApplicationContext a = new ClassPathXmlApplicationContext("spring2.xml");
+		porderDAO pd= (porderDAO) a.getBean("pd");
+		
+		HttpServletRequest  request= ServletActionContext.getRequest();
+		
+		List list = pd.queryHibAllPorder();
+		
+		request.getSession().setAttribute("rs", list);
+		
+		return SUCCESS;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+org.action
+updatePorderAction.java
+
+
+//變更訂單
+package org.action;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.DAO.porderDAO;
+import org.apache.struts2.ServletActionContext;
+import org.model.porder;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.opensymphony.xwork2.ActionSupport;
+
+public class updatePorderAction extends ActionSupport{
+	private int id;
+	private String product;
+	private int amount;
+
+	public String execute()throws Exception{
+		ApplicationContext a=new ClassPathXmlApplicationContext("spring2.xml");
+		porderDAO pd=(porderDAO)a.getBean("pd");
+		
+		//更新指定id訂單產品或數量
+		pd.updateMemberPorder(id,product, amount);
+		
+		List l=pd.queryHibAllPorder();
+		
+		HttpServletRequest request=ServletActionContext.getRequest();
+		request.getSession().setAttribute("rs",l);
+		
+		return SUCCESS;
+	}
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getProduct() {
+		return product;
+	}
+
+	public void setProduct(String product) {
+		this.product = product;
+	}
+
+	public int getAmount() {
+		return amount;
+	}
+
+	public void setAmount(int amount) {
+		this.amount = amount;
+	}
+}
+
+
+
+
+
+
+
+
+
