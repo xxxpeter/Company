@@ -838,7 +838,7 @@ org.action
 addOrder.java
 
 
-//訂單
+//客戶訂單
 package org.action;
 
 import javax.servlet.http.HttpServletRequest;
