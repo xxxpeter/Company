@@ -687,7 +687,7 @@ spring2.xml
 //方法如何實踐
 
 org.action
-add.MemberAction.java
+addMemberAction.java
 
 
 //註冊失敗或成功
